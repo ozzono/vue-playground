@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<div class="text-center">
-			<v-text-field v-model="date" class="date-field" @click:append="dialog=true" readonly @click="dialog=true" :label="label" append-icon="mdi-calendar" />
+			<v-text-field v-model="date" class="date-field" @click:append="dialog=true" :readonly="readonly" @click="dialog=true" :label="label" append-icon="mdi-calendar" />
 			<v-dialog
 				v-model="dialog"
 				width="20em"
@@ -45,7 +45,7 @@ export default {
 		focused:false,
     picker: new Date().toISOString().substr(0, 10),
 	}),
-	props:["label","setMax","maxDate"],
+	props:["label","setMax","maxDate","defaultDate","readonly"],
   methods:{
 		showDate(){
 				this.date=this.picker.split("-").reverse().join("/")
@@ -59,12 +59,16 @@ export default {
 				}
 			}
 		},
+	},
+	watch:{
+		date: function(){
+			this.$emit("inner-date",this.date)
+		}
+	},
+	created(){
+		if (this.defaultDate.length>0){
+			this.picker=this.defaultDate
+		}
 	}
 }
 </script>
-
-<style scoped>
-.date-field:hover{
-	cursor: pointer;
-}
-</style>

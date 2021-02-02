@@ -13,6 +13,8 @@
       <v-flex class="text-center">
         <DatePicker
           label="Desc"
+          default-date="2010"
+          @inner-date="log($event)"
         />
       </v-flex>
     </v-main>
@@ -34,6 +36,11 @@ export default {
   data: () => ({
     //
   }),
+  methods:{
+    log(input){
+      console.log(input)
+    }
+  }
 };
 </script>
 
